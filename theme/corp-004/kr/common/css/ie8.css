@@ -1,0 +1,15 @@
+
+.board_write>table .file>.file_wrap>input[type=file],
+.ui-helper-zfix{filter:Alpha(Opacity=0);}
+
+.ui-progressbar .ui-progressbar-overlay {filter: Alpha(opacity=25);}
+
+.ui-widget-overlay,
+.ui-widget-shadow,
+#photo>li>a>.bg_l{filter: Alpha(Opacity=30)}
+
+.ui-widget-header .ui-state-disabled,
+.ui-state-disabled .ui-icon {filter:Alpha(Opacity=35);}
+
+#layerBg,
+.ui-widget-header .ui-priority-secondary{filter:Alpha(Opacity=70);}

@@ -1,0 +1,25 @@
+<script type="text/javascript" src="/theme/corp-001/kr/common/js/agency.js"></script>
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>
+<div class="contact-section">
+	<div class="in-box">
+		<p class="address">
+			03127 서울시 종로구 창경궁로 16길 69(연건동) 2F
+			<span>T. 02-741-9960</span>
+		</p>
+		<div class="map-box" id="GoogleMap_map" style="width:928px;height:360px;"></div>
+		<ul class="links">
+			<li><a href="#project-request" onclick="popup.project();"><!--<a href="#project-request" onclick="popup.layerPop($(this), 0.7); return false;">--><em>프로젝트 의뢰</em><span>폰트디자인을 비롯하여<br />글꼴디자인에 대해 문의하세요. </span></a></li>
+          <li><a href="mailto:<?=$this->config->item('email')?>"><em>일반문의</em><span>프로젝트 외 궁금한 점이 있다면<br />일반문의하세요.</span></a></li>
+		<li><a href="/front/html/faq"><em>FAQ</em><span>문의 전 FAQ을 통해 필요한<br />답변을 보다 빠르게 확인하세요.</span></a></li>
+		</ul>
+	</div>
+</div>
+<script type="text/javascript">
+	//<![CDATA[
+	$(document).ready(function(){
+		var addr= Array("서울특별시 종로구 창경궁로16길 69");
+		GoogleMap.initialize(addr[0]);
+		
+	});		
+	//]]>
+</script>

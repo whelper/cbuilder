@@ -1,0 +1,47 @@
+<h2 class="title"><span><em>오시는 길</em></span></h2>
+<div class="location-box">
+    <div class="shop">
+        <div class="info">
+            <h3>본점</h3>
+            <p>인천시 중구 서해대로 190</p>
+            <p>인천시 중구 신흥동 3가 49-6번지</p>
+        </div>
+        <div class="map" id="map1"></div>
+    </div>
+    <div class="shop">
+        <div class="info">
+            <h3>지점</h3>
+            <p>인천 중구 축항대로 296번길 146</p>
+            <p>인전 중구 신흥동3가 65-16</p>
+        </div>
+        <div class="map" id="map2"></div>
+    </div>
+</div>
+ <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=cN9C6ShZZz0aaCrAJIeO"></script>
+<script>
+ 
+var map1 = new naver.maps.Map('map1', {
+  	center: new naver.maps.LatLng(37.445223, 126.6231816),
+  	zoom: 10
+});  
+  
+  
+var marker1 = new naver.maps.Marker({
+    position: new naver.maps.LatLng(37.445223, 126.6231816),
+    map: map1
+});  
+ 
+
+var map2 = new naver.maps.Map('map2', {
+  	center: new naver.maps.LatLng(37.4357835, 126.6248481),
+  	zoom: 10
+});
+  
+var marker2 = new naver.maps.Marker({
+    position: new naver.maps.LatLng(37.4357835, 126.6248481),
+    map: map2
+});
+
+menu_on(5); //메뉴관리
+ 
+</script>

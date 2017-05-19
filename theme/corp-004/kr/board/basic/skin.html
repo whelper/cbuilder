@@ -1,0 +1,431 @@
+<s_templ_list>
+<script type="text/javascript">
+		//<![CDATA[
+		function getArrayValue(arr,v){
+			for(var i=0; i < arr.length; i++){
+				if(arr[i] == v){
+					return arr[i+1];
+				}
+			}
+			return null;
+		}
+
+		function auth_board(){
+			if(!$("#layer-passwd").val()){
+				alert("비밀번호를 입력해 주세요");
+				$("#layer-passwd").focus();
+				return;
+			}
+			with(document.frmReg){
+				passwd.value = $("#layer-passwd").val();
+				action = "/front/checkPasswd";
+				submit();
+			}
+		}
+			
+		$(window).load(function(){	// $(".testText").text("off2");
+			$('select.selectCus').customSelect({customClass:'selType'});
+
+			$("#frm-search").submit(function(){
+				if($("[name=sch_keyword]").val().trim()){
+					location.replace('/front/board/list/id/[##_id_##]/sch_keyname/'+encodeURIComponent($("[name=sch_keyname]").val())+'/sch_keyword/'+encodeURIComponent($("[name=sch_keyword]").val()));
+				}
+				return false;
+			});
+
+			$(".lock").click(function(e){
+				e.preventDefault();
+				$("#layer-passwd").val('');
+				
+				var arr = $(this).attr("href").split("/");
+				
+				with(document.frmReg){
+					no.value = getArrayValue(arr,'no'); 
+				}
+				
+				$(".wrap-layer>.bg").css({
+					"width" : $(document).width(),
+					"height" : $(document).height()
+				}).fadeTo("fast", 0.8);
+
+				$(".wrap-layer>.layer-box").css({
+					"top" :  ($(document).height()-500) / 2,
+					"left" :  ($(document).width() - 390) / 2,
+				}).show();
+
+				$(".wrap-layer>.layer-box>.close").click(function(){
+					$(".wrap-layer>.layer-box").hide();
+					$(".wrap-layer>.bg").css({
+							"width" : 0,
+							"height" : 0
+					}).fadeTo("fast", 0.8);
+				})
+			});
+		});
+		//]]>
+	</script>
+	<form name="frmReg" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="dbjob" value="">
+	<input type="hidden" name="menu_id" value="[##_id_##]">
+	<input type="hidden" name="no" value="[##_hidden_no_##]">
+	<input type="hidden" name="board_name" value="[##_board_name_##]">
+	<input type="hidden" name="passwd" value="">
+	</form>
+	<!--[s] Search -->
+	<form id="frm-search">
+	<div class="search_top_board">
+		<p class="total">
+			총 <span>[##_count_##]</span>건
+		</p>
+		<div class="right">
+			<div class="selectType selType01" style="width:77px;">
+				<select name="sch_keyname" class="selectCus">
+					<option value="title">제목</option>
+					<option value="content">내용</option>
+				</select>
+			</div>
+			<input type="text" id="search_ip" name="sch_keyword" value="" placeholder="검색어를 입력 하세요" />
+			<button type="submit" class="btn-search">검색</button>
+		</div>
+	</div>
+	</form>
+	<!--[e] Search -->
+
+	<!--[s] List -->
+	<div class="board_list">
+		<table>
+		<caption>리스트</caption>
+		<thead>
+		<tr>
+			<th scope="col" width="60">번호</th>
+			<th scope="col">제목</th>
+			<th scope="col" width="130">등록일</th>
+			<th scope="col" width="100">조회수</th>
+		</tr>
+		</thead>
+		<tbody>
+		<s_board_list>
+		<tr>
+			<td>[##_brd_list_no_##]</td>
+			<td class="title">	[##_brd_list_reply_##]<a href="[##_brd_list_view_link_##]" class="[##_brd_css_lock_##] mr5">[##_brd_list_icon_reply_##] [##_brd_list_title_##]</a>[##_brd_list_file_##][##_brd_list_new_##][##_brd_list_lock_##]</td>
+			<td>[##_brd_list_date_##]</td>
+			<td>[##_brd_list_visited_##]</td>
+		</tr>
+		</s_board_list>
+		<s_no_data>
+		<tr class="noPost">
+			<td colspan="20">등록된 글이 없습니다.</td>
+		</tr>
+		</s_no_data>
+		</tbody>
+		</table>
+	</div>
+	<s_btn_write>
+	<p class="mt20">
+		<a href="[##_brd_btn_write_##]" class="btn">글쓰기</a>
+	</p>
+	</s_btn_write>
+	
+	<!--[s] Paging -->
+	<div class="paging_all c_box mt20">
+		<div class="paging">
+			[##_PAGING_##]
+		</div>
+	</div>
+	<!--[e] Paging -->
+
+</s_templ_list>
+
+<s_templ_write>
+	<script type="text/javascript">
+	//<![CDATA[
+		function frmValid(){
+			with(document.frmReg){
+				if(!writer.value){
+					alert("이름을 입력하세요");
+					writer.focus();
+					return;
+				}
+				
+				if(typeof(passwd) != 'undefined'){
+					if(!passwd.value){
+						alert("비밀번호를 입력하세요");
+						passwd.focus();
+						return;
+					}
+				}
+				
+				if(!title.value){
+					alert("제목을 입력하세요");
+					title.focus();
+					return;
+				}
+				
+				if(!CKEDITOR.instances.textarea_id.getData()){
+					alert("내용을 입력하세요");
+					content.focus();
+					return;
+				}
+				submit();
+			}
+		}
+	//]]>
+	</script>
+		<form name="frmReg" method="post" action="/front/boardDbjob" enctype="multipart/form-data">
+		<input type="hidden" name="dbjob" value="[##_hidden_dbjob_##]">
+		<input type="hidden" name="menu_id" value="[##_hidden_id_##]">
+		<input type="hidden" name="no" value="[##_hidden_no_##]">
+		<input type="hidden" name="board_name" value="[##_hidden_board_name_##]">
+		<input type="hidden" name="ref_id" value="[##_hidden_ref_id_##]">
+		<input type="hidden" name="depth" value="[##_hidden_depth_##]">
+		<input type="hidden" name="ansnum" value="[##_hidden_ansnum_##]">
+		<div class="board_write">
+			<table>
+			<caption>입력폼</caption>
+			<tbody>
+				<tr>
+					<th scope="row" width="150">이름</th>
+					<td>
+						<input type="text" id="" name="writer" style="width:250px;line-height:1;"  value="[##_writer_##]"  />
+					</td>
+				</tr>
+				<s_no_passwd>
+				<tr>
+					<th scope="row">비밀번호</th>
+					<td>
+						<input type="password" id="" name="passwd" style="width:250px;line-height:1;"  value=""  />
+					</td>
+				</tr>
+				</s_no_passwd>
+				<tr>
+					<th scope="row">첨부파일</th>
+					<td>
+						<input type="file" id="" name="files[]" style="width:100%;border:0;background:none;padding:0;line-height:1;" value="" />
+						[##_file_info1_##]
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">제목</th>
+					<td>
+						<input type="text" id="" name="title" style="width:100%;line-height:1;" value="[##_title_##]" />
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">내용</th>
+					<td>
+						<textarea id="textarea_id" name="content" class="txt-box" style="width:618px; height:200px;" />[##_content_##]</textarea>
+						[##_ckeditor_##]
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">자동등록방지</th>
+					<td>
+						<script src='https://www.google.com/recaptcha/api.js'></script>
+						<div class="g-recaptcha" data-sitekey="[##_google_recaptcha_sitekey_##]"></div>
+					</td>
+				</tr>
+			</tbody>
+			</table>
+		</div>
+		
+		<p class="mt20 tac">
+			<a href="javascript:frmValid();" class="btn">확인</a>
+			<a href="javascript:history.back();" class="btn ml10">취소</a>
+		</p>
+		
+		
+	</form>
+
+</s_templ_write>
+<s_templ_view>
+	<script type="text/javascript">
+		//<![CDATA[ 
+		function frmValid(){
+			with(document.frmComment){
+				if($("[name=b_comment]").attr("disabled")){
+					alert('사용권한이 없습니다.');
+					return;
+				}
+
+				if(!name.value){
+					alert('작성자명을 입력하세요');
+					return;
+				}
+
+				if(!b_comment.value){
+					alert('덧글을 입력하세요');
+					b_comment.focus();
+					return;
+				}
+				submit();
+			}
+			return;
+		}
+
+		function auth_board(){
+			if(!$("#layer-passwd").val()){
+				alert("비밀번호를 입력해 주세요");
+				$("#layer-passwd").focus();
+				return;
+			}
+			with(document.frmReg){
+				passwd.value = $("#layer-passwd").val();
+				action = "/front/checkPasswd";
+				submit();
+			}
+		}
+		
+		function board(db){ //게시판 상세 액션별 페이지 분기
+			var submit_url = '/front/boardDbjob';
+			if(db == 'u' || db == 'd'){
+				with(document.frmReg){
+					dbjob.value = db;
+				}
+				
+				$("#layer-passwd").val('');
+				
+				$(".wrap-layer>.bg").css({
+					"width" : $(document).width(),
+					"height" : $(document).height()
+				}).fadeTo("fast", 0.8);
+
+				$(".wrap-layer>.layer-box").css({
+					"top" :  ($(document).height()-500) / 2,
+					"left" :  ($(document).width() - 390) / 2,
+				}).show();
+
+				$(".wrap-layer>.layer-box>.close").click(function(){
+					$(".wrap-layer>.layer-box").hide();
+					$(".wrap-layer>.bg").css({
+							"width" : 0,
+							"height" : 0
+					}).fadeTo("fast", 0.8);
+				})
+				return;
+
+			
+			}else{
+				submit_url = '/front/board/write/id/[##_hidden_id_##]/no/[##_hidden_no_##]';
+			}
+			
+			with(document.frmReg){
+				dbjob.value = db;
+				action = submit_url;
+				submit();
+			}
+		}
+		
+		function commentModify(cno){
+			$.ajax({
+				type: "POST",
+				url: "/board/ajax_comment",
+				data: $("[name=frmComment]").serialize()+'&no='+cno,
+				success: function(data){
+					$("[name=b_comment]").val(data);
+					with(document.frmComment){
+						dbjob.value = 'u';
+						no.value = cno;
+					}
+				},
+				error:function(error){
+					alert('에러');
+				}
+			});
+		}
+		
+		function commentDelete(cno){
+			if(!confirm('삭제하시겠습니까?')) return;
+			with(document.frmComment){
+				dbjob.value = 'd';
+				no.value = cno;
+				submit();
+			}
+		}
+		//]]>
+	</script>
+<!-- 게시판 읽기[s] -->
+<form name="frmReg" method="post" enctype="multipart/form-data">
+<input type="hidden" name="dbjob" value="">
+<input type="hidden" name="menu_id" value="[##_hidden_id_##]">
+<input type="hidden" name="no" value="[##_hidden_no_##]">
+<input type="hidden" name="board_name" value="[##_hidden_board_name_##]">
+<input type="hidden" name="passwd" value="">
+</form>
+<div class="board_view">
+	<table>
+	<caption>상세</caption>
+	<thead>
+	<tr>
+		<th>[##_view_title_##]</th>
+	</tr>
+	<tr>
+		<td>
+			<label>첨부파일</label>
+			<span style="width:160px">[##_view_file_##]</span>
+			<label>조회</label>
+			<span>[##_view_visited_##]</span>
+			<label>작성자</label>
+			<span style="width:100px;">[##_view_writer_##]</span>
+			<label>날짜</label>
+			<span>[##_view_date_##]</span>
+		</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td class="cont">
+			[##_view_content_##]
+		</td>
+	</tr>
+	</tbody>
+	</table>
+</div>
+
+<!-- [s] Prev Next -->
+<div class="pageNavigation mt60">
+	<dl class="prev">
+		<dt><span>이전글</span></dt>
+		<dd><a href="[##_view_prev_link_##]">[##_view_prev_title_##]</a></dd>
+	</dl>
+	<dl class="next">
+		<dt><span>다음글</span></dt>
+		<dd><a href="[##_view_next_link_##]">[##_view_next_title_##]</a></dd>
+	</dl>
+</div>
+
+<p class="mt20 tar">
+	<a href="/front/board/list/id/[##_hidden_id_##]" class="btn">목록</a>
+	<s_btn_delete><a href="javascript:board('d');" class="btn ml10">삭제</a></s_btn_delete>
+	<s_btn_modify><a href="javascript:board('u');" class="btn ml10">수정</a></s_btn_modify>
+	<s_btn_reply><a href="javascript:board('r');" class="btn ml10">답변</a></s_btn_reply>
+</p>
+<!-- 게시판 읽기[e] -->
+</s_templ_view>
+<s_templ_passwd>
+
+<form name="frmReg" method="post" action="/front/checkPasswd" enctype="multipart/form-data">
+		<input type="hidden" name="menu_id" value="[##_hidden_id_##]">
+		<input type="hidden" name="no" value="[##_hidden_no_##]">
+		<input type="hidden" name="board_name" value="[##_hidden_board_name_##]">
+		<div class="board_write mt25">
+			<table cellspacing="0" summary="비밀번호 확인">
+			<caption>비밀번호 확인</caption>
+			<tbody>
+			<tr>
+				<th scope="row"><span class="point"><img src="[##_theme_skin_##]/images/th_qna11.gif" alt="비밀번호" /></span></th>
+				<td>
+					<input type="password" id="" name="passwd" style="width:100px;"  value="[##_writer_##]"  />
+					<input type="image" src="[##_theme_skin_##]/images/btn_passwd.jpg" alt="확인" class="vam" />
+				</td>
+			</tr>
+			</tbody>
+			</table>
+		</div>
+	</form>
+
+	
+</div>
+<!-- 게시판 읽기[e] -->
+</s_templ_passwd>
+
+		

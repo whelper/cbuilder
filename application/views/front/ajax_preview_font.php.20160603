@@ -1,0 +1,35 @@
+<?
+$text = $sample_text;
+$f = explode('|',$font_ttf);
+$ttf = FCPATH.'upload/product/'.$f[0];
+
+$font_size = ($font_size*3)/4;
+$padding = 10; 
+
+$size = imagettfbbox($font_size, 0, $ttf, $text);
+//$xsize = abs($size[0]) + abs($size[2]);
+//$ysize = abs($size[5]) + abs($size[1]);
+$xsize = abs($size[0]) + abs($size[2]) + $padding; 
+$ysize = abs($size[5]) + abs($size[1]) + $padding; 
+//$xsize = 300;
+//$ysize = 50;
+
+//$textWidth = abs($size[4] - $size[0]);
+
+$xsize = ($xsize > 630) ? 630 : $xsize;
+$ysize = ($ysize > 94) ? 94 : $ysize; 
+$image = imagecreate($xsize, $ysize);
+
+$blue = imagecolorallocate($image, 0, 0, 255);
+$white = ImageColorAllocate($image, 255,255,255);
+$black = imagecolorallocate($image, 0, 0, 0); // °ËÁ¤»ö
+imagefilledrectangle ($image, 0, 0, $xsize, $ysize, $white);
+imagettftext($image, $font_size, 0, abs($size[0]), abs($size[5])+($padding / 2), $black, $ttf,$text); 
+
+
+header("content-type: image/png");
+imagepng($image);
+imagedestroy($image);
+
+?>
+

@@ -1,0 +1,4 @@
+<?
+echo $preview_text;
+?>
+

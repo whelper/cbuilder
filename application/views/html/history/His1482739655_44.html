@@ -1,0 +1,43 @@
+<div class="wrap-contents">
+  <div class="address">
+    <div class="mt20" id="map" style="height:448px">
+    </div>
+    <script>
+      
+      var map = new naver.maps.Map('map', {
+        center: new naver.maps.LatLng(37.5357899, 127.1341189),
+        mapTypeControl: true,
+        scaleControl: true,
+        logoControl: true,
+        mapDataControl: true,
+        zoomControl: true,
+        zoomControlOptions: {
+          position: naver.maps.Position.RIGHT_CENTER
+        },
+        zoom: 10
+      });
+      
+      var marker = new naver.maps.Marker({
+        position: new naver.maps.LatLng(37.5357899, 127.1341189),
+        map: map
+      });
+      
+      
+    </script>	
+    <table class="mt30">
+      <tr>
+        <th>주소</th>
+        <td>서울 강동구 천호동 447번지 정산빌딩 5층 </td>
+      </tr>
+      <tr>
+        <th>전화번호</th>
+        <td>02-474-5450</td>
+      </tr>
+      <tr>
+        <th>팩스</th>
+        <td>02-474-5460 </td>
+      </tr>
+    </table>
+  </div>
+  
+</div>

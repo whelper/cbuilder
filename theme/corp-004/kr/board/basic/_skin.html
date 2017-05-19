@@ -1,0 +1,318 @@
+<s_templ_list>
+<script type="text/javascript">
+		//<![CDATA[
+		$(window).load(function(){	// $(".testText").text("off2");
+			$('select.selectCus').customSelect({customClass:'selType'});
+
+			$("#frm-search").submit(function(){
+				if($("[name=sch_keyword]").val().trim()){
+					location.replace('/front/board/list/id/[##_id_##]/sch_keyname/'+encodeURIComponent($("[name=sch_keyname]").val())+'/sch_keyword/'+encodeURIComponent($("[name=sch_keyword]").val()));
+				}
+				return false;
+			});
+		});
+		//]]>
+	</script>
+<div id="section"><!-- 내용 -->
+	<!--[s] Search -->
+	<form id="frm-search">
+	<div class="search_top">
+		<div class="left">
+			총 <strong>[##_count_##]</strong>건
+		</div>
+		<div class="right">
+			<div class="selType01_box" style="width:100px;">
+				<select name="sch_keyname" class="selectCus">
+					<option value="title">제목</option>
+					<option value="content">내용</option>
+				</select>
+			</div>
+			<span class="box">
+				<input type="text" id="" name="sch_keyword" value="" />
+				<input type="image" name="" src="[##_theme_skin_##]/images/btn_sch.gif" />
+			</span>
+		</div>
+	</div>
+	</form>
+	<!--[e] Search -->
+
+	<!--[s] List -->
+	<div class="board_list">
+		<table cellspacing="0" summary="List">
+			<caption>List</caption>
+			<thead>
+			<tr>
+				<th scope="col" width="68"><img src="[##_theme_skin_##]/images/th_num.gif" alt="번호" /></th>
+				<th scope="col"><img src="[##_theme_skin_##]/images/th_title.gif" alt="제목" /></th>
+				<th scope="col" width="115"><img src="[##_theme_skin_##]/images/th_day.gif" alt="등록일" /></th>
+				<th scope="col" width="98"><img src="[##_theme_skin_##]/images/th_hit.gif" alt="조회수" /></th>
+			</tr>
+			</thead>
+			<tbody>
+			<s_board_list>
+			<tr>
+				<td>[##_brd_list_no_##]</td>
+				<td class="title">
+					[##_brd_list_reply_##]<a href="[##_brd_list_view_link_##]" class="[##_brd_list_css_reply_##]">[##_brd_list_icon_reply_##][##_brd_list_title_##]</a>[##_brd_list_file_##][##_brd_list_new_##]
+				</td>
+				<td>[##_brd_list_date_##]</td>
+				<td>[##_brd_list_visited_##]</td>
+			</tr>
+			</s_board_list>
+			<s_no_data>
+			<tr class="noPost">
+				<td colspan="20">등록된 글이 없습니다.</td>
+			</tr>
+			</s_no_data>
+			</tbody>
+		</table>
+	</div>
+	<!--[e] List -->
+	<s_btn_write>
+	<div class="c_box mt10" style="text-align:right">
+		<a href="[##_brd_btn_write_##]"><img src="[##_theme_skin_##]/images/btn_write.jpg"></a>
+	</div>
+	</s_btn_write>
+	<!--[s] Paging -->
+	<div class="paging_all c_box mt20">
+		<div class="paging">
+			[##_PAGING_##]
+		</div>
+	</div>
+	<!--[e] Paging -->
+</div>
+
+
+</s_templ_list>
+
+<s_templ_write>
+	<script type="text/javascript">
+	//<![CDATA[
+		function frmValid(){
+			with(document.frmReg){
+				if(!writer.value){
+					alert("작성자를 입력하세요");
+					writer.focus();
+					return;
+				}
+				
+				if(!title.value){
+					alert("제목을 입력하세요");
+					title.focus();
+					return;
+				}
+				
+				if(!CKEDITOR.instances.textarea_id.getData()){
+					alert("내용을 입력하세요");
+					content.focus();
+					return;
+				}
+				submit();
+			}
+		}
+	//]]>
+	</script>
+		<form name="frmReg" method="post" action="/front/boardDbjob" enctype="multipart/form-data">
+		<input type="hidden" name="dbjob" value="[##_hidden_dbjob_##]">
+		<input type="hidden" name="menu_id" value="[##_hidden_id_##]">
+		<input type="hidden" name="no" value="[##_hidden_no_##]">
+		<input type="hidden" name="board_name" value="[##_hidden_board_name_##]">
+		<input type="hidden" name="ref_id" value="[##_hidden_ref_id_##]">
+		<input type="hidden" name="depth" value="[##_hidden_depth_##]">
+		<input type="hidden" name="ansnum" value="[##_hidden_ansnum_##]">
+		<div class="board_write mt25">
+			<table cellspacing="0" summary="문의작성">
+			<caption>문의작성</caption>
+			<tbody>
+			<tr>
+				<th scope="row"><span class="point"><img src="[##_theme_skin_##]/images/th_qna01.gif" alt="이름" /></span></th>
+				<td><input type="text" id="" name="writer" style="width:379px;"  value="[##_writer_##]"  /></td>
+			</tr>
+			<tr>
+				<th scope="row"><span class="point"><img src="[##_theme_skin_##]/images/th_qna05.gif" alt="제목" /></span></th>
+				<td><input type="text" id="" name="title" style="width:613px;" value="[##_title_##]" /></td>
+			</tr>
+			<tr>
+				<th scope="row"><img src="[##_theme_skin_##]/images/th_qna09.gif" alt="첨부파일" /></th>
+				<td>
+					<input type="file" id="" name="files[]" style="width:379px;border:0" value="" />
+					[##_file_info1_##]
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><span class="point"><img src="[##_theme_skin_##]/images/th_qna06.gif" alt="내용" /></span></th>
+				<td>
+					<textarea id="textarea_id" name="content" class="txt-box" style="width:618px; height:200px;" />[##_content_##]</textarea>
+				[##_ckeditor_##]
+				</td>
+			</tr>
+			</tbody>
+			</table>
+		</div>
+	</form>
+
+	<div class="btnArea tar">
+		<span class="bt"><a href="javascript:frmValid();"><img src="[##_theme_skin_##]/images/btn_confirm.gif" alt="취소" /></a></span>
+		<a href="javascript:history.back();"><img src="[##_theme_skin_##]/images/btn_cancel.gif" alt="취소" /></a>
+	</div>
+</s_templ_write>
+<s_templ_view>
+	<script type="text/javascript">
+		//<![CDATA[  
+		function frmValid(){
+			with(document.frmComment){
+				if($("[name=b_comment]").attr("disabled")){
+					alert('사용권한이 없습니다.');
+					return;
+				}
+
+				if(!name.value){
+					alert('작성자명을 입력하세요');
+					return;
+				}
+
+				if(!b_comment.value){
+					alert('덧글을 입력하세요');
+					b_comment.focus();
+					return;
+				}
+				submit();
+			}
+			return;
+		}
+		
+		function board(db){ //게시판 상세 액션별 페이지 분기
+			var submit_url = '/front/boardDbjob';
+			if(db == 'd'){
+				if(!confirm("삭제 하시겠습니까?")) return;
+			}else{
+				submit_url = '/front/board/write/id/[##_hidden_id_##]/no/[##_hidden_no_##]';
+			}
+			
+			with(document.frmReg){
+				dbjob.value = db;
+				action = submit_url;
+				submit();
+			}
+		}
+		
+		function commentModify(cno){
+			$.ajax({
+				type: "POST",
+				url: "/board/ajax_comment",
+				data: $("[name=frmComment]").serialize()+'&no='+cno,
+				success: function(data){
+					$("[name=b_comment]").val(data);
+					with(document.frmComment){
+						dbjob.value = 'u';
+						no.value = cno;
+					}
+				},
+				error:function(error){
+					alert('에러');
+				}
+			});
+		}
+		
+		function commentDelete(cno){
+			if(!confirm('삭제하시겠습니까?')) return;
+			with(document.frmComment){
+				dbjob.value = 'd';
+				no.value = cno;
+				submit();
+			}
+		}
+		//]]>
+	</script>
+<!-- 게시판 읽기[s] -->
+<form name="frmReg" method="post" enctype="multipart/form-data">
+<input type="hidden" name="dbjob" value="">
+<input type="hidden" name="menu_id" value="[##_hidden_id_##]">
+<input type="hidden" name="no" value="[##_hidden_no_##]">
+<input type="hidden" name="board_name" value="[##_hidden_board_name_##]">
+</form>
+<div id="section"><!-- 내용 -->
+	<!--[s] View -->
+	<div class="board_view">
+		<table cellspacing="0" summary="View">
+			<caption>View</caption>
+			<thead>
+			<tr>
+				<th scope="row" width="98"><img src="[##_theme_skin_##]/images/th_title.gif" alt="제목" /></th>
+				<td colspan="99" width="694" class="title">[##_view_title_##]</td>
+			</tr>
+			<tr>
+				<th scope="row" width="98"><img src="[##_theme_skin_##]/images/th_day.gif" alt="등록일" /></th>
+				<td width="481">[##_view_date_##]</td>
+				<th scope="row" width="98"><img src="[##_theme_skin_##]/images/th_hit.gif" alt="조회수" /></th>
+				<td width="98">[##_view_visited_##]</td>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td colspan="99" class="file">
+					[##_view_file_##]
+				</td>
+			</tr>
+			<tr>
+				<td colspan="99">
+					<div class="viewArea">
+						[##_view_content_##]
+					</div>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+	<!--[e] View -->
+
+	<div class="btnArea tar">
+		<a href="/front/board/list/id/[##_hidden_id_##]"><img src="[##_theme_skin_##]/images/btn_list2.gif" alt="목록" /></a>
+		<s_btn_delete><a href="javascript:board('d');"><img src="[##_theme_skin_##]/images/btn_delete.jpg" alt="삭제" /></a></s_btn_delete>
+		<s_btn_modify><a href="javascript:board('u');"><img src="[##_theme_skin_##]/images/btn_modify.jpg" alt="수정" /></a></s_btn_modify>
+		<s_btn_reply><a href="javascript:board('r');"><img src="[##_theme_skin_##]/images/btn_reply.jpg" alt="수정" /></a></s_btn_reply>
+	</div>
+
+	<!-- [s] Prev Next -->` 
+	<div class="pageNavigation mt40">
+		<dl class="prev">
+			<dt><img src="[##_theme_skin_##]/images/txt_pgNavi_prev.gif" alt="이전글" /></dt>
+			<dd>&nbsp;<a href="[##_view_prev_link_##]">[##_view_prev_title_##]</a></dd>
+		</dl>
+		<dl class="next">
+			<dt><img src="[##_theme_skin_##]/images/txt_pgNavi_next.gif" alt="다음글" /></dt>
+			<dd>&nbsp;<a href="[##_view_next_link_##]">[##_view_next_title_##]</a></dd>
+		</dl>
+	</div>
+	<!-- [e] Prev Next -->
+</div>
+<!-- 게시판 읽기[e] -->
+</s_templ_view>
+<s_templ_passwd>
+
+<form name="frmReg" method="post" action="/front/checkPasswd" enctype="multipart/form-data">
+		<input type="hidden" name="menu_id" value="[##_hidden_id_##]">
+		<input type="hidden" name="no" value="[##_hidden_no_##]">
+		<input type="hidden" name="board_name" value="[##_hidden_board_name_##]">
+		<div class="board_write mt25">
+			<table cellspacing="0" summary="비밀번호 확인">
+			<caption>비밀번호 확인</caption>
+			<tbody>
+			<tr>
+				<th scope="row"><span class="point"><img src="[##_theme_skin_##]/images/th_qna11.gif" alt="비밀번호" /></span></th>
+				<td>
+					<input type="password" id="" name="passwd" style="width:100px;"  value="[##_writer_##]"  />
+					<input type="image" src="[##_theme_skin_##]/images/btn_passwd.jpg" alt="확인" class="vam" />
+				</td>
+			</tr>
+			</tbody>
+			</table>
+		</div>
+	</form>
+
+	
+</div>
+<!-- 게시판 읽기[e] -->
+</s_templ_passwd>
+
+		
